@@ -10,8 +10,6 @@ const Search = () => {
   const location = useLocation()
   const navigate = useNavigate()
 
-  console.log(location.pathname.split('/'))
-
   const handleSearch = useCallback(
     debounce((value: string) => {
       if (value.length >= 3) {
@@ -24,6 +22,12 @@ const Search = () => {
           navigate(`/jobs/search?query=${value}`)
       } else {
         setSearchParams({})
+        if (
+          location.pathname.split('/')[
+            location.pathname.split('/').length - 1
+          ] === 'search'
+        )
+          navigate('/jobs')
       }
     }, 500),
     []
