@@ -1,10 +1,10 @@
-import { ChangeEvent, useCallback, useState } from 'react'
+import React, { ChangeEvent, useCallback, useState } from 'react'
 import searchIcon from '../../assets/icons/search.svg'
 import styles from './index.module.scss'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { debounce } from '../../utils/debounce'
 
-const Search = () => {
+const Search: React.FC = () => {
   const [search, setSearch] = useState<string>('')
   const [searchParams, setSearchParams] = useSearchParams()
   const location = useLocation()

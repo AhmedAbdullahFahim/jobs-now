@@ -1,8 +1,9 @@
 import { useLocation } from 'react-router-dom'
 import styles from './index.module.scss'
 import { navbarData } from '../../data/navbarData'
+import React from 'react'
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const location = useLocation()
   const currentPage: string =
     location.pathname.split('/')[location.pathname.split('/').length - 1]

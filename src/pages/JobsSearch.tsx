@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom'
 import NavbarWithSearch from '../layouts/NavbarWithSearch'
 
-const JobsSearch = () => {
+const JobsSearch: React.FC = () => {
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
   const searchQuery = queryParams.get('query')
