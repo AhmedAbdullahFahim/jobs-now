@@ -30,10 +30,6 @@ export interface Job {
 }
 
 export interface NormalizedJobsState {
-  jobs: {
-    [id: string]: Job
-  }
-  skills: {
-    [id: string]: Skill
-  }
+  jobs: { [key: string]: Job }
+  skills: { [key: string]: Skill }
 }
