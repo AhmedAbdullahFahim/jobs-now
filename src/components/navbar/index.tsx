@@ -11,7 +11,7 @@ const Navbar = () => {
       <h4>JobsNow</h4>
       <ul>
         {navbarData.map((item) => (
-          <li>
+          <li key={item.href}>
             <a
               href={item.href}
               className={

@@ -1,7 +1,4 @@
-type NavbarItem = {
-  href: string
-  title: string
-}
+import { NavbarItem } from '../../types'
 
 export const navbarData: NavbarItem[] = [
   { href: '/jobs', title: 'Home' },
