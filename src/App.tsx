@@ -1,8 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
-import Home from './pages/Home'
 import JobsSearch from './pages/JobsSearch'
 import History from './pages/History'
+import Home from './pages/Home'
 
 function App() {
   return (
