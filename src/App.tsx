@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home'
 import JobsSearch from './pages/JobsSearch'
@@ -11,6 +11,7 @@ function App() {
         <Route path='/jobs' index element={<Home />} />
         <Route path='/jobs/search' element={<JobsSearch />} />
         <Route path='/history' index element={<History />} />
+        <Route path='*' element={<Navigate to='/jobs' />} />
       </Routes>
     </BrowserRouter>
   )
