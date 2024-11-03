@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import jobsReducer from './slices/jobsSlice'
+import skillsReducer from './slices/skillsSlice'
 
 export const store = configureStore({
   reducer: {
     jobs: jobsReducer,
+    skills: skillsReducer,
   },
 })
 

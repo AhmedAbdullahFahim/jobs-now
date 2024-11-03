@@ -1,24 +1,25 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { normalize, schema } from 'normalizr'
-import { NormalizedJobsState } from '../../../types'
+import { Job, NormalizedJobsState } from '../../../types'
 import { getJobs } from '../../network/apis'
+import { fetchSkillById } from './skillsSlice'
 
-const skillSchema = new schema.Entity('skills')
-const jobSchema = new schema.Entity('jobs', {
-  relationships: {
-    skills: [skillSchema],
-  },
-})
+const jobSchema = new schema.Entity('jobs')
 
 export const fetchJobs = createAsyncThunk<
   { entities: NormalizedJobsState; cursor: number; count: number },
   number
->('jobs/fetchJobs', async (cursor: number = 0) => {
+>('jobs/fetchJobs', async (cursor: number = 0, { dispatch }) => {
   const response = await getJobs(cursor)
   const normalizedData = normalize(response.data.data.jobs, [jobSchema])
+  response.data.data.jobs.forEach((job: Job) => {
+    job.relationships.skills.forEach((skillRef) => {
+      const skillId = skillRef.id
+      dispatch(fetchSkillById(skillId))
+    })
+  })
   const entities = {
     jobs: normalizedData.entities.jobs || {},
-    skills: normalizedData.entities.skills || {},
   }
   const count = response.data.data.meta.count
 
@@ -38,7 +39,9 @@ export interface JobsState {
 }
 
 const initialState: JobsState = {
-  entities: { jobs: {}, skills: {} },
+  entities: {
+    jobs: {},
+  },
   cursor: 0,
   count: 0,
   loading: false,
@@ -48,13 +51,7 @@ const initialState: JobsState = {
 const jobsSlice = createSlice({
   name: 'jobs',
   initialState,
-  reducers: {
-    resetJobsState: (state) => {
-      state.entities = { jobs: {}, skills: {} }
-      state.cursor = 0
-      state.count = 0
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchJobs.pending, (state) => {
@@ -74,10 +71,6 @@ const jobsSlice = createSlice({
           const { entities, cursor, count } = action.payload
           state.loading = false
           state.entities.jobs = { ...state.entities.jobs, ...entities.jobs }
-          state.entities.skills = {
-            ...state.entities.skills,
-            ...entities.skills,
-          }
           state.cursor = cursor + 12
           state.count = count
         }
@@ -89,5 +82,4 @@ const jobsSlice = createSlice({
   },
 })
 
-export const { resetJobsState } = jobsSlice.actions
 export default jobsSlice.reducer

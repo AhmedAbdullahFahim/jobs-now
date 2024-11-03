@@ -7,11 +7,7 @@ export interface Endpoints {
   jobs: string
   search: string
   job: string
-  skills: string
-}
-
-export interface Skill {
-  id: string
+  skill: string
 }
 
 export interface JobAttributes {
@@ -19,7 +15,7 @@ export interface JobAttributes {
 }
 
 export interface JobRelationships {
-  skills: Skill[]
+  skills: { id: string }[]
 }
 
 export interface Job {
@@ -29,7 +25,24 @@ export interface Job {
   relationships: JobRelationships
 }
 
+export interface SkillRelationships {
+  jobs: { id: string }[]
+  skills: { id: string }[]
+}
+
+export interface Skill {
+  id: string
+  name: string
+  type: string
+  importance: string
+  level: string
+  relationships: SkillRelationships
+}
+
 export interface NormalizedJobsState {
   jobs: { [key: string]: Job }
-  skills: { [key: string]: Skill }
+}
+
+export interface NormalizedSkillsState {
+  skills: { [id: string]: Skill }
 }
