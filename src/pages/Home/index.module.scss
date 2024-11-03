@@ -15,6 +15,13 @@
       display: flex;
       align-items: flex-start;
       gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    > button {
+      all: unset;
+      cursor: pointer;
+      color: blue;
     }
   }
 }

@@ -6,6 +6,7 @@ import { AppDispatch, RootState } from '../../store'
 import Loading from '../../components/loading'
 import styles from './index.module.scss'
 import JobCard from '../../components/job-card'
+import ErrorMessage from '../../components/error'
 
 const Home: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -17,9 +18,13 @@ const Home: React.FC = () => {
     entities: { jobs },
   } = useSelector((state: RootState) => state.jobs)
 
+  const loadMoreJobs: () => void = () => {
+    dispatch(fetchJobs(cursor))
+  }
+
   useEffect(() => {
-    dispatch(fetchJobs(count))
-  }, [dispatch, cursor])
+    dispatch(fetchJobs(cursor))
+  }, [])
 
   return (
     <NavbarWithSearch>
@@ -27,7 +32,7 @@ const Home: React.FC = () => {
         {loading ? (
           <Loading />
         ) : error ? (
-          <h5>{error}</h5>
+          <ErrorMessage message={error} />
         ) : (
           <div className={styles.jobsContainer}>
             <h3>All Jobs ({count})</h3>
@@ -36,6 +41,9 @@ const Home: React.FC = () => {
                 <JobCard key={item.id} job={item} />
               ))}
             </div>
+            {cursor < count && (
+              <button onClick={loadMoreJobs}>View more</button>
+            )}
           </div>
         )}
       </div>
