@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import styles from './index.module.scss'
 import { navbarData } from '../../data/navbarData'
 import React from 'react'
@@ -13,8 +13,8 @@ const Navbar: React.FC = () => {
       <ul>
         {navbarData.map((item) => (
           <li key={item.href}>
-            <a
-              href={item.href}
+            <Link
+              to={item.href}
               className={
                 item.href.split('/')[item.href.split('/').length - 1] ===
                 currentPage
@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
               }
             >
               {item.title}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
