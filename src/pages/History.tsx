@@ -1,5 +1,5 @@
 import React from 'react'
-import NavbarWithSearch from '../layouts/NavbarWithSearch'
+import NavbarWithSearch from '../layouts/navbar-with-search'
 
 const History: React.FC = () => {
   return (

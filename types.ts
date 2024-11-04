@@ -62,11 +62,12 @@ export interface JobsState {
 }
 
 export interface JobState {
-  job: Job | {}
+  job: Job
   loading: boolean
   error: string | null
 }
 
-export interface SearchHistory {
-  searchHistory: string[]
+export interface Sidebar {
+  list: string[]
+  title: string
 }

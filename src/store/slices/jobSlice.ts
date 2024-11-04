@@ -1,17 +1,30 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Job, JobState } from '../../../types'
 import { getJobById } from '../../network/apis'
+import { fetchSkillById } from './skillsSlice'
 
 export const fetchJobById = createAsyncThunk<Job, string>(
   'jobs/fetchJobById',
   async (jobId) => {
     const response = await getJobById(jobId)
-    return response.data
+    const job = response.data.data.job
+
+    return {
+      id: job.id,
+      attributes: job.attributes,
+      relationships: job.relationships,
+      type: job.type,
+    }
   }
 )
 
 const initialState: JobState = {
-  job: {},
+  job: {
+    id: '',
+    type: '',
+    attributes: { title: '' },
+    relationships: { skills: [] },
+  },
   loading: false,
   error: null,
 }

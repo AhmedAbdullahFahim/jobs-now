@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import NavbarWithSearch from '../../layouts/NavbarWithSearch'
+import NavbarWithSearch from '../../layouts/navbar-with-search'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchJobs } from '../../store/slices/jobsSlice'
 import { AppDispatch, RootState } from '../../store'

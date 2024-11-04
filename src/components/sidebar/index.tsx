@@ -1,18 +1,18 @@
 import React from 'react'
 import styles from './index.module.scss'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../../store'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../../store'
 import { fetchJobs } from '../../store/slices/jobsSlice'
 import { useSearchParams } from 'react-router-dom'
 
 interface Props {
-  title: string
-  list: string[]
   search: boolean
 }
 
-const Sidebar: React.FC<Props> = ({ title, list, search }: Props) => {
+const Sidebar: React.FC<Props> = ({ search }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams()
+  const { list, title } = useSelector((state: RootState) => state.sidebar)
+
   const dispatch = useDispatch<AppDispatch>()
   const handleSearch = (item: string) => {
     dispatch(fetchJobs({ search: item }))

@@ -1,11 +1,11 @@
-import React, { ChangeEvent, useCallback, useState } from 'react'
-import searchIcon from '../../assets/icons/search.svg'
-import styles from './index.module.scss'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import React, { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import searchIcon from '../../assets/icons/search.svg'
 import { AppDispatch, RootState } from '../../store'
-import { pushToSearchHistory } from '../../store/slices/searchHistorySlice'
+import { setSidebarContentList } from '../../store/slices/sidebarSlice'
 import { debounce } from '../../utils/debounce'
+import styles from './index.module.scss'
 
 const Search: React.FC = () => {
   const [search, setSearch] = useState<string>('')
@@ -13,6 +13,7 @@ const Search: React.FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
+  const { list, title } = useSelector((state: RootState) => state.sidebar)
 
   const handleSearch = useCallback(
     debounce((value: string) => {
@@ -20,7 +21,11 @@ const Search: React.FC = () => {
 
       if (value.length >= 3) {
         setSearchParams({ query: value })
-        dispatch(pushToSearchHistory(value))
+        dispatch(
+          setSidebarContentList(
+            title.includes('history') ? [...list, value] : [value]
+          )
+        )
         if (
           location.pathname.split('/')[
             location.pathname.split('/').length - 1

@@ -1,34 +1,37 @@
-import { useLocation } from 'react-router-dom'
-import NavbarWithSearch from '../../layouts/NavbarWithSearch'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '../../store'
-import styles from './index.module.scss'
 import { useEffect } from 'react'
-import { fetchJobs } from '../../store/slices/jobsSlice'
-import Loading from '../../components/loading'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 import ErrorMessage from '../../components/error'
 import JobCard from '../../components/job-card'
+import Loading from '../../components/loading'
 import Sidebar from '../../components/sidebar'
+import NavbarWithSearch from '../../layouts/navbar-with-search'
+import { AppDispatch, RootState } from '../../store'
+import { fetchJobs } from '../../store/slices/jobsSlice'
+import { setSidebarContentTitle } from '../../store/slices/sidebarSlice'
+import styles from './index.module.scss'
 
 const JobsSearch: React.FC = () => {
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
   const searchQuery = queryParams.get('query')
-  const { searchHistory } = useSelector(
-    (state: RootState) => state.searchHistory
-  )
   const dispatch = useDispatch<AppDispatch>()
   const {
     error,
-    cursor,
     loading,
     count,
     entities: { jobs },
   } = useSelector((state: RootState) => state.jobs)
 
+  const { list, title } = useSelector((state: RootState) => state.sidebar)
+
   useEffect(() => {
     dispatch(fetchJobs({ search: searchQuery ?? '' }))
   }, [searchQuery])
+
+  useEffect(() => {
+    dispatch(setSidebarContentTitle('Search history: '))
+  }, [])
 
   return (
     <NavbarWithSearch>
@@ -44,7 +47,9 @@ const JobsSearch: React.FC = () => {
               {Object.values(jobs).length ? (
                 <div
                   className={'jobs'}
-                  style={{ flex: searchHistory?.length ? 0.75 : 1 }}
+                  style={{
+                    flex: list?.length && title.includes('history') ? 0.75 : 1,
+                  }}
                 >
                   {Object.values(jobs).map((item) => (
                     <JobCard
@@ -57,13 +62,7 @@ const JobsSearch: React.FC = () => {
               ) : (
                 <h2>Oops, we could not find any jobs...</h2>
               )}
-              {searchHistory?.length ? (
-                <Sidebar
-                  title={'Search History:'}
-                  list={searchHistory}
-                  search={true}
-                />
-              ) : null}
+              {list?.length ? <Sidebar search={true} /> : null}
             </div>
           </section>
         )}
