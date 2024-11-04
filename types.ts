@@ -46,3 +46,27 @@ export interface NormalizedJobsState {
 export interface NormalizedSkillsState {
   skills: { [id: string]: Skill }
 }
+
+export interface SkillsState {
+  entities: NormalizedSkillsState
+  loading: boolean
+  error: string | null
+}
+
+export interface JobsState {
+  entities: NormalizedJobsState
+  cursor: number
+  count: number
+  loading: boolean
+  error: string | null
+}
+
+export interface JobState {
+  job: Job | {}
+  loading: boolean
+  error: string | null
+}
+
+export interface SearchHistory {
+  searchHistory: string[]
+}

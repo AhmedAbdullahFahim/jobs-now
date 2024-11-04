@@ -9,7 +9,7 @@ const Navbar: React.FC = () => {
     location.pathname.split('/')[location.pathname.split('/').length - 1]
   return (
     <nav className={styles.navbar}>
-      <h4>JobsNow</h4>
+      <Link to='/jobs'>JobsNow</Link>
       <ul>
         {navbarData.map((item) => (
           <li key={item.href}>

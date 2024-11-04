@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { Skill, SkillsState } from '../../../types'
 import { getSkillById } from '../../network/apis'
-import { NormalizedSkillsState, Skill } from '../../../types'
 
 export const fetchSkillById = createAsyncThunk<Skill, string>(
   'skills/fetchSkillById',
@@ -23,12 +23,6 @@ export const fetchSkillById = createAsyncThunk<Skill, string>(
     }
   }
 )
-
-interface SkillsState {
-  entities: NormalizedSkillsState
-  loading: boolean
-  error: string | null
-}
 
 const initialState: SkillsState = {
   entities: { skills: {} },

@@ -8,3 +8,11 @@ export const getJobs = (cursor: number = 0) => {
 export const getSkillById = (id: string) => {
   return axios({ url: `${endpoints.skill}${id}` })
 }
+
+export const searchJobs = (query: string = '') => {
+  return axios({ url: `${endpoints.search}?query=${query}` })
+}
+
+export const getJobById = (id: string) => {
+  return axios({ url: `${endpoints.job}${id}` })
+}
