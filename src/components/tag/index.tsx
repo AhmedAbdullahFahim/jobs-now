@@ -13,14 +13,8 @@ const Tag: React.FC<Props> = ({ id }: Props) => {
   )
 
   return (
-    <button
-      key={id}
-      className={styles.skill}
-      onClick={() => {
-        console.log(id)
-      }}
-    >
-      {skill!! ? skill?.name : 'loading...'}
+    <button key={id} className={styles.skill} onClick={() => {}}>
+      {!!skill ? skill?.name : 'loading...'}
     </button>
   )
 }

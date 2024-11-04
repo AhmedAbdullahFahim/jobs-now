@@ -2,12 +2,20 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Job, JobState } from '../../../types'
 import { getJobById } from '../../network/apis'
 import { fetchSkillById } from './skillsSlice'
+import { RootState } from '..'
 
 export const fetchJobById = createAsyncThunk<Job, string>(
   'jobs/fetchJobById',
-  async (jobId) => {
+  async (jobId, { getState, dispatch }) => {
     const response = await getJobById(jobId)
     const job = response.data.data.job
+
+    job.relationships.skills.forEach((skillRef: { id: string }) => {
+      const skillId = skillRef.id
+      const { skills } = getState() as RootState
+      if (!skills?.entities?.skills?.[skillId]?.name)
+        dispatch(fetchSkillById(skillId))
+    })
 
     return {
       id: job.id,
@@ -41,6 +49,8 @@ const jobSlice = createSlice({
       })
       .addCase(fetchJobById.fulfilled, (state, action: PayloadAction<Job>) => {
         state.job = action.payload
+        state.loading = false
+        state.error = null
       })
       .addCase(fetchJobById.rejected, (state, action) => {
         state.loading = false

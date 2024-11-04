@@ -6,10 +6,10 @@ import { fetchJobs } from '../../store/slices/jobsSlice'
 import { useSearchParams } from 'react-router-dom'
 
 interface Props {
-  search: boolean
+  search?: boolean
 }
 
-const Sidebar: React.FC<Props> = ({ search }: Props) => {
+const Sidebar: React.FC<Props> = ({ search = false }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const { list, title } = useSelector((state: RootState) => state.sidebar)
 

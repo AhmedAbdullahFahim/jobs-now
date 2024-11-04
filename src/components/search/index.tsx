@@ -17,8 +17,6 @@ const Search: React.FC = () => {
 
   const handleSearch = useCallback(
     debounce((value: string) => {
-      console.log('hiii', value)
-
       if (value.length >= 3) {
         setSearchParams({ query: value })
         dispatch(
