@@ -44,6 +44,8 @@ const skillsSlice = createSlice({
         fetchSkillById.fulfilled,
         (state, action: PayloadAction<Skill>) => {
           state.entities.skills[action.payload.id] = action.payload
+          state.loading = false
+          state.error = null
         }
       )
       .addCase(fetchSkillById.rejected, (state, action) => {

@@ -1,5 +1,5 @@
 .skill {
-  all: unset;
+  text-decoration: none;
   cursor: pointer;
   background-color: #c4c4c4;
   border-radius: 5px;
@@ -8,4 +8,5 @@
   padding: 0.3rem 0.8rem;
   min-width: fit-content;
   text-align: center;
+  width: fit-content;
 }

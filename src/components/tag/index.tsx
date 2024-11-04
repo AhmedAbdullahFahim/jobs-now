@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
 import styles from './index.module.scss'
+import { Link } from 'react-router-dom'
 
 interface Props {
   id: string
@@ -13,9 +14,9 @@ const Tag: React.FC<Props> = ({ id }: Props) => {
   )
 
   return (
-    <button key={id} className={styles.skill} onClick={() => {}}>
+    <Link to={`/skill/${id}`} key={id} className={styles.skill}>
       {!!skill ? skill?.name : 'loading...'}
-    </button>
+    </Link>
   )
 }
 
