@@ -6,11 +6,12 @@ import styles from './index.module.scss'
 
 interface Props {
   job: Job
+  stylingClassName?: string
 }
 
-const JobCard: React.FC<Props> = ({ job }: Props) => {
+const JobCard: React.FC<Props> = ({ job, stylingClassName }: Props) => {
   return (
-    <div className={styles.card}>
+    <article className={`${styles.card} ${stylingClassName}`}>
       <h6>{job.attributes.title}</h6>
       <div className={styles.skillsWrapper}>
         <p>Related Skills:</p>
@@ -20,8 +21,8 @@ const JobCard: React.FC<Props> = ({ job }: Props) => {
           ))}
         </div>
       </div>
-      <Link to='/jobs/search'>View job details</Link>
-    </div>
+      <Link to={`/job/${job.id}`}>View job details</Link>
+    </article>
   )
 }
 

@@ -1,0 +1,29 @@
+.sidebar {
+  background-color: #d9d9d9;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+  flex: 0.25;
+  margin-inline-start: auto;
+
+  > h6 {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  > ul {
+    padding-inline: 1rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.7rem;
+    > li {
+      color: #000;
+      font-size: 1.1rem;
+      text-decoration: underline;
+      > button {
+        all: unset;
+        cursor: pointer;
+      }
+    }
+  }
+}

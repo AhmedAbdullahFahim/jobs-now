@@ -2,6 +2,9 @@ import React, { ChangeEvent, useCallback, useState } from 'react'
 import searchIcon from '../../assets/icons/search.svg'
 import styles from './index.module.scss'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../../store'
+import { pushToSearchHistory } from '../../store/slices/searchHistorySlice'
 import { debounce } from '../../utils/debounce'
 
 const Search: React.FC = () => {
@@ -9,11 +12,15 @@ const Search: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const location = useLocation()
   const navigate = useNavigate()
+  const dispatch = useDispatch<AppDispatch>()
 
   const handleSearch = useCallback(
     debounce((value: string) => {
+      console.log('hiii', value)
+
       if (value.length >= 3) {
         setSearchParams({ query: value })
+        dispatch(pushToSearchHistory(value))
         if (
           location.pathname.split('/')[
             location.pathname.split('/').length - 1

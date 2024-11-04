@@ -1,16 +1,16 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { normalize, schema } from 'normalizr'
-import { Job, NormalizedJobsState } from '../../../types'
-import { getJobs } from '../../network/apis'
+import { Job, JobsState, NormalizedJobsState } from '../../../types'
+import { getJobs, searchJobs } from '../../network/apis'
 import { fetchSkillById } from './skillsSlice'
 
 const jobSchema = new schema.Entity('jobs')
 
 export const fetchJobs = createAsyncThunk<
   { entities: NormalizedJobsState; cursor: number; count: number },
-  number
->('jobs/fetchJobs', async (cursor: number = 0, { dispatch }) => {
-  const response = await getJobs(cursor)
+  { cursor?: number; search?: string }
+>('jobs/fetchJobs', async ({ cursor = 0, search = '' } = {}, { dispatch }) => {
+  const response = search ? await searchJobs(search) : await getJobs(cursor)
   const normalizedData = normalize(response.data.data.jobs, [jobSchema])
   response.data.data.jobs.forEach((job: Job) => {
     job.relationships.skills.forEach((skillRef) => {
@@ -25,18 +25,10 @@ export const fetchJobs = createAsyncThunk<
 
   return {
     entities: entities as NormalizedJobsState,
-    cursor,
+    cursor: search ? 0 : cursor,
     count,
   }
 })
-
-export interface JobsState {
-  entities: NormalizedJobsState
-  cursor: number
-  count: number
-  loading: boolean
-  error: string | null
-}
 
 const initialState: JobsState = {
   entities: {
@@ -70,7 +62,10 @@ const jobsSlice = createSlice({
         ) => {
           const { entities, cursor, count } = action.payload
           state.loading = false
-          state.entities.jobs = { ...state.entities.jobs, ...entities.jobs }
+          state.entities.jobs =
+            cursor > 0
+              ? { ...state.entities.jobs, ...entities.jobs }
+              : entities.jobs
           state.cursor = cursor + 12
           state.count = count
         }

@@ -13,6 +13,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    min-width: fit-content;
 
     > input {
       font-size: 1.5rem;

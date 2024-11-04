@@ -19,24 +19,26 @@ const Home: React.FC = () => {
   } = useSelector((state: RootState) => state.jobs)
 
   const loadMoreJobs: () => void = () => {
-    dispatch(fetchJobs(cursor))
+    dispatch(fetchJobs({ cursor }))
   }
 
   useEffect(() => {
-    dispatch(fetchJobs(cursor))
+    dispatch(fetchJobs({ cursor }))
   }, [])
 
   return (
     <NavbarWithSearch>
-      <div className={styles.wrapper}>
+      <div className='wrapper'>
         {loading ? (
           <Loading />
         ) : error ? (
           <ErrorMessage message={error} />
+        ) : Object.values(jobs).length === 0 ? (
+          <h2>Oops, we couldn't find any jobs</h2>
         ) : (
-          <div className={styles.jobsContainer}>
+          <section className={'jobsContainer'}>
             <h3>All Jobs ({count})</h3>
-            <div className={styles.jobs}>
+            <div className={'jobs'}>
               {Object.values(jobs).map((item) => (
                 <JobCard key={item.id} job={item} />
               ))}
@@ -44,7 +46,7 @@ const Home: React.FC = () => {
             {cursor < count && (
               <button onClick={loadMoreJobs}>View more</button>
             )}
-          </div>
+          </section>
         )}
       </div>
     </NavbarWithSearch>

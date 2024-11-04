@@ -2,7 +2,6 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
 import styles from './index.module.scss'
-import Loading from '../loading'
 
 interface Props {
   id: string
