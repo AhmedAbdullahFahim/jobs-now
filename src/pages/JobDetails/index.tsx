@@ -20,20 +20,20 @@ const JobDetails: React.FC = () => {
     if (id) dispatch(fetchJobById(id));
   }, [id]);
 
-  useEffect(() => {
-    if (job.id)
-      dispatch(
-        setSidebarContentList(
-          job?.relationships?.skills?.map((item) => item.id)
-        )
-      );
-  }, [job]);
+  // useEffect(() => {
+  //   if (job.id)
+  //     dispatch(
+  //       setSidebarContentList(
+  //         job?.relationships?.skills?.map((item) => item.id)
+  //       )
+  //     );
+  // }, [job]);
 
-  useEffect(() => {
-    dispatch(
-      setSidebarContentTitle("Related Jobs: ")
-    );
-  }, []);
+  // useEffect(() => {
+  //   dispatch(
+  //     setSidebarContentTitle("Related Jobs: ")
+  //   );
+  // }, []);
 
   if (loading) return <Loading />;
 
