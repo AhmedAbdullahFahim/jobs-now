@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+
+  > .description {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+
+    > p {
+      font-size: 1.1rem;
+    }
+  }
+
+  h5 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #000;
+  }
+
+  .skillsContainer {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+  }
+}

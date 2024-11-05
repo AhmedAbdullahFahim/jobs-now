@@ -24,20 +24,11 @@ const Search: React.FC = () => {
             title.includes('history') ? [...list, value] : [value]
           )
         )
-        if (
-          location.pathname.split('/')[
-            location.pathname.split('/').length - 1
-          ] === 'jobs'
-        )
+        if (location.pathname.endsWith('jobs'))
           navigate(`/jobs/search?query=${value}`)
       } else {
         setSearchParams({})
-        if (
-          location.pathname.split('/')[
-            location.pathname.split('/').length - 1
-          ] === 'search'
-        )
-          navigate('/jobs')
+        if (location.pathname.endsWith('search')) navigate('/jobs')
       }
     }, 500),
     []
